@@ -17,6 +17,5 @@ class ride_assignment():
         self.dists: Dict[id, Dict[id, float]]
 
     def init_dists(self) -> None:
-        for i in self.users:
-            for j in self.users:
-                self.dists[]
+        for src in self.users:
+            for dst in self.users:
