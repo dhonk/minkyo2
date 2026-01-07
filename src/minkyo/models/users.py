@@ -5,10 +5,8 @@ import typing
 for creating ride assignments
 '''
 
-type id = str
-
 class user(BaseModel):
-    id: id
+    id: int
     name: str = 'No name'
     address: str = 'No address'
     gmaps_place_id: str = 'No pid'

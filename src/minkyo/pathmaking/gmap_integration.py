@@ -74,7 +74,7 @@ def get_route(start: str, end: str) -> Dict[Any, Any]: # start, end both placeId
     response = requests.post(route_url, data=json.dumps(data), headers=headers)
     return response.json()
 
-def extract_from_route(response: Dict[Any, Any]) -> tuple[float, float]:
+def extract_dist_time_from_route(response: Dict[Any, Any]) -> tuple[float, float]:
     route = response['routes'][0]
     try: 
         dist = float(route['distanceMeters'])
@@ -82,6 +82,11 @@ def extract_from_route(response: Dict[Any, Any]) -> tuple[float, float]:
         dist = 0
     time = float(route['duration'][:-1])
     return dist, time
+
+def get_distance(start: str, end: str) -> float:
+    route = get_route(start, end)
+    dist, _ = extract_dist_time_from_route(route)
+    return dist
 
 if __name__ == '__main__':
     indata = input('from:\n')
@@ -102,5 +107,5 @@ if __name__ == '__main__':
     selection2 = int(selection2)
     print(ids1[selection2])
 
-    dist, time = extract_from_route(get_route(ids[selection1],ids1[selection2]))
+    dist, time = extract_dist_time_from_route(get_route(ids[selection1],ids1[selection2]))
     print(f'Distance between {adds[selection1]} and {adds1[selection2]} is {dist} meters, will take {time} seconds.')
