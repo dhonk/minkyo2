@@ -1,4 +1,4 @@
-from typing import Any, Dict
+from typing import Any
 
 import dotenv
 import json
@@ -13,7 +13,7 @@ print(api_key)
 # ALSO BEFORE U FORGET SET UP QUOTAS BEFORE YOU SPEND ALL YOUR MONEY YOU BUM
 
 # first figuring out autocomplete thingy
-def get_place(indata: str) -> Dict[str, Any]:
+def get_place(indata: str) -> dict[str, Any]:
     autoc_url: str = 'https://places.googleapis.com/v1/places:autocomplete'
     headers = {
         'Content-Type':'application/json',
@@ -35,7 +35,7 @@ example json response:
          'text': {'text': '122 Nobel Drive, Santa Cruz, CA, USA'}}}]}
 '''
 
-def extract_from_place(response: Dict[str, Any]) -> tuple[list[str], list[str]]:
+def extract_from_place(response: dict[str, Any]) -> tuple[list[str], list[str]]:
     ids: list[str] = [] # placeIds
     adds: list[str] = [] # addresses
     for s in response['suggestions']:
@@ -46,7 +46,7 @@ def extract_from_place(response: Dict[str, Any]) -> tuple[list[str], list[str]]:
     return ids, adds
 
 # ok figuring out routes distance between two points now (too lazy to use routes matrix LOL)
-def get_route(start: str, end: str) -> Dict[Any, Any]: # start, end both placeId
+def get_route(start: str, end: str) -> dict[Any, Any]: # start, end both placeId
     route_url = 'https://routes.googleapis.com/directions/v2:computeRoutes'
     headers = {
         'Content-Type':'application/json',
@@ -74,7 +74,7 @@ def get_route(start: str, end: str) -> Dict[Any, Any]: # start, end both placeId
     response = requests.post(route_url, data=json.dumps(data), headers=headers)
     return response.json()
 
-def extract_dist_time_from_route(response: Dict[Any, Any]) -> tuple[float, float]:
+def extract_dist_time_from_route(response: dict[Any, Any]) -> tuple[float, float]:
     route = response['routes'][0]
     try: 
         dist = float(route['distanceMeters'])
@@ -89,6 +89,7 @@ def get_distance(start: str, end: str) -> float:
     return dist
 
 if __name__ == '__main__':
+    # testing stuffs
     indata = input('from:\n')
     response = get_place(indata)
     ids, adds = extract_from_place(response)

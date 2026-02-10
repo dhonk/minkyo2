@@ -6,7 +6,7 @@ for creating ride assignments
 '''
 
 class user(BaseModel):
-    id: int
+    id: str
     name: str = 'No name'
     address: str = 'No address'
     gmaps_place_id: str = 'No pid'
